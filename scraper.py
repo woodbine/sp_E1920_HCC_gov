@@ -29,14 +29,15 @@ block = soup.find('ul',{'id':'lNav'})
 pageLinks = block.findAll('li')
 
 for pageLink in pageLinks:
-	title = pageLink.text
+	pageTitle = pageLink.text
 	url = 'http://www.hertsdirect.org' + pageLink.a['href']
-	if 'CSV' in title:
+	if 'CSV' in pageTitle:
 		html2 = urllib2.urlopen(url)
 		soup2 = BeautifulSoup(html2)
 		block = soup2.find('ul',{'class':'level1'})
 		fileLinks = block.findAll('li')
   		for fileLink in fileLinks:
+  			title = fileLink.text
 	  		url = fileLink.a['href']
 			parsed_link = urlparse.urlsplit(url.encode('utf8'))
 			parsed_link = parsed_link._replace(path=urllib.quote(parsed_link.path))
