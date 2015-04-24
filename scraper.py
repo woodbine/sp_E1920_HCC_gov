@@ -32,12 +32,12 @@ for pageLink in pageLinks:
 	title = header.text
 	url = pageLink.a['href']
 	if 'CSV' in title:
-	  html2 = urllib2.urlopen(url)
-    soup2 = BeautifulSoup(html)
-    block = soup2.find('ul',{'id':'level1'})
-    fileLinks = block.findAll('li')
-  	for fileLink in fileLinks:
-  		url = fileLink['href']
+		html2 = urllib2.urlopen(url)
+		soup2 = BeautifulSoup(html2)
+		block = soup2.find('ul',{'id':'level1'})
+		fileLinks = block.findAll('li')
+  		for fileLink in fileLinks:
+	  		url = fileLink['href']
 			parsed_link = urlparse.urlsplit(url.encode('utf8'))
 			parsed_link = parsed_link._replace(path=urllib.quote(parsed_link.path))
 			encoded_link = parsed_link.geturl()
@@ -50,4 +50,4 @@ for pageLink in pageLinks:
 			todays_date = str(datetime.now())
 			scraperwiki.sqlite.save(unique_keys=['l'], data={"l": url, "f": filename, "d": todays_date })
 			print filename
-  
+	  
