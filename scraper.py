@@ -30,7 +30,7 @@ pageLinks = block.findAll('li')
 
 for pageLink in pageLinks:
 	title = pageLink.text
-	url = pageLink.a['href']
+	url = 'http://www.hertsdirect.org' + pageLink.a['href']
 	if 'CSV' in title:
 		html2 = urllib2.urlopen(url)
 		soup2 = BeautifulSoup(html2)
