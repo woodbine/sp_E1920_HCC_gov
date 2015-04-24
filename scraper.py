@@ -37,15 +37,15 @@ for pageLink in pageLinks:
 		block = soup2.find('ul',{'class':'level1'})
 		fileLinks = block.findAll('li')
   		for fileLink in fileLinks:
-  			title = fileLink.text
+  			title = fileLink.text.strip()
   			print title.encode('utf8')
 	  		url = fileLink.a['href']
 			parsed_link = urlparse.urlsplit(url.encode('utf8'))
 			parsed_link = parsed_link._replace(path=urllib.quote(parsed_link.path))
 			encoded_link = parsed_link.geturl()
 			# create the right strings for the new filename
-			csvYr = title.split(' ')[-1]
-			csvMth = title.split(' ')[-2][:3]
+			csvYr = title.split(' ')[-4]
+			csvMth = title.split(' ')[-5][:3]
 			csvMth = csvMth.upper()
 			csvMth = convert_mth_strings(csvMth);
 			filename = entity_id + "_" + csvYr + "_" + csvMth + ".csv"
