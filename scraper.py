@@ -37,7 +37,7 @@ for pageLink in pageLinks:
 		block = soup2.find('ul',{'class':'level1'})
 		fileLinks = block.findAll('li')
   		for fileLink in fileLinks:
-	  		url = fileLink['href']
+	  		url = fileLink.a['href']
 			parsed_link = urlparse.urlsplit(url.encode('utf8'))
 			parsed_link = parsed_link._replace(path=urllib.quote(parsed_link.path))
 			encoded_link = parsed_link.geturl()
