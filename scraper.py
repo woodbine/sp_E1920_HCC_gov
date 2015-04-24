@@ -29,7 +29,7 @@ block = soup.find('ul',{'id':'lNav'})
 pageLinks = block.findAll('li')
 
 for pageLink in pageLinks:
-	title = header.text
+	title = pageLink.text
 	url = pageLink.a['href']
 	if 'CSV' in title:
 		html2 = urllib2.urlopen(url)
