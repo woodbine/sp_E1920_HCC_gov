@@ -25,7 +25,7 @@ html = urllib2.urlopen(url)
 soup = BeautifulSoup(html)
 
 # find all entries with the required class
-block = soup.find('ul',{'id':'llNav'})
+block = soup.find('ul',{'id':'lNav'})
 pageLinks = block.findAll('li')
 
 for pageLink in pageLinks:
