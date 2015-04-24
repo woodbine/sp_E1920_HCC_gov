@@ -38,7 +38,6 @@ for pageLink in pageLinks:
 		fileLinks = block.findAll('li')
   		for fileLink in fileLinks:
   			title = fileLink.text.strip()
-  			print title.encode('utf8')
 	  		url = 'http://www.hertsdirect.org' + fileLink.a['href']
 			parsed_link = urlparse.urlsplit(url.encode('utf8'))
 			parsed_link = parsed_link._replace(path=urllib.quote(parsed_link.path))
