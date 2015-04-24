@@ -34,7 +34,7 @@ for pageLink in pageLinks:
 	if 'CSV' in title:
 		html2 = urllib2.urlopen(url)
 		soup2 = BeautifulSoup(html2)
-		block = soup2.find('ul',{'id':'level1'})
+		block = soup2.find('ul',{'class':'level1'})
 		fileLinks = block.findAll('li')
   		for fileLink in fileLinks:
 	  		url = fileLink['href']
