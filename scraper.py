@@ -85,7 +85,7 @@ def convert_mth_strings ( mth_string ):
 #### VARIABLES 1.0
 
 entity_id = "E1920_HCC_gov"
-url = "http://www.hertsdirect.org/your-council/work/opendata/money/supplierpymtsmr250/"
+url = "https://www.hertfordshire.gov.uk/about-the-council/freedom-of-information-and-council-data/open-data-statistics-about-hertfordshire/what-we-spend-and-how-we-spend-it/what-we-spend-and-how-we-spend-it.aspx#"
 errors = 0
 data = []
 
@@ -96,49 +96,18 @@ soup = BeautifulSoup(html, 'lxml')
 
 
 #### SCRAPE DATA
-import urllib
-import urlparse
 
-block = soup.find('ul',{'id':'lNav'})
-pageLinks = block.findAll('li')
+block = soup.find('div',attrs={'id':'L12_faqcontent'})
+links = block.findAll('a')
+for link in links:
+    if '.csv' in link['href']:
+        url = 'https://www.hertfordshire.gov.uk'+link['href']
+        title = link.text.strip()
+        csvYr = title.split('-')[-1].strip().split()[1]
+        csvMth = title.split('-')[-1].strip()[:3]
+        csvMth = convert_mth_strings(csvMth.upper())
+        data.append([csvYr, csvMth, url])
 
-for pageLink in pageLinks:
-    pageTitle = pageLink.text
-    url = 'http://www.hertsdirect.org' + pageLink.a['href']
-    if 'CSV' in pageTitle:
-        html2 = urllib2.urlopen(url)
-        soup2 = BeautifulSoup(html2, 'lxml')
-        block = soup2.find('ul',{'class':'level1'})
-        fileLinks = block.findAll('li')
-        for fileLink in fileLinks:
-            title = fileLink.text.strip()
-            url = 'http://www.hertsdirect.org' + fileLink.a['href']
-            parsed_link = urlparse.urlsplit(url.encode('utf8'))
-            parsed_link = parsed_link._replace(path=urllib.quote(parsed_link.path))
-            encoded_link = parsed_link.geturl()
-            csvYr = title.split(' ')[-4]
-            if csvYr=='13':
-                csvYr = '2013'
-            csvMth = title.split(' ')[-5][:3]
-            csvMth = convert_mth_strings(csvMth.upper())
-            data.append([csvYr, csvMth, url])
-    if 'Excel' in pageTitle:
-        html2 = urllib2.urlopen(url)
-        soup2 = BeautifulSoup(html2, 'lxml')
-        block = soup2.find('ul',{'class':'level1'})
-        fileLinks = block.findAll('li')
-        for fileLink in fileLinks:
-            title = fileLink.text.strip()
-            url = 'http://www.hertsdirect.org' + fileLink.a['href']
-            parsed_link = urlparse.urlsplit(url.encode('utf8'))
-            parsed_link = parsed_link._replace(path=urllib.quote(parsed_link.path))
-            encoded_link = parsed_link.geturl()
-            csvYr = title.split(' ')[-4]
-            if csvYr=='13':
-                csvYr = '2013'
-            csvMth = title.split(' ')[-5][:3]
-            csvMth = convert_mth_strings(csvMth.upper())
-            data.append([csvYr, csvMth, url])
 
 #### STORE DATA 1.0
 
